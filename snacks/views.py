@@ -4,6 +4,8 @@ import snacks
 from .models import Snack
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+from rest_framework import generics
+from .serializer import SnackSerializer
 
 
 # Create your views here.
@@ -38,3 +40,13 @@ class SnackDeleteView(DeleteView):
     template_name = 'snack_delete.html'
     model = Snack
     success_url = reverse_lazy('list_view')
+
+
+class SnacksApiList(generics.ListAPIView):
+    serializer_class = SnackSerializer
+    queryset = Snack.objects.all()
+
+
+class SnackDetail(generics.RetrieveAPIView):
+    serializer_class = SnackSerializer
+    queryset = Snack.objects.all()
